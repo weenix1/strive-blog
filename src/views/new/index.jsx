@@ -32,9 +32,13 @@ const NewBlogPost = () => {
         </Form.Group>
         <Form.Group controlId="blog-content" className="mt-3">
           <Form.Label>Blog Content</Form.Label>
-          <ReactQuill
-            value={this.state.text}
-            onChange={this.handleChange}
+          <Form.Control
+            as="textarea"
+            row={20}
+            value={formData.content}
+            onChange={(e) =>
+              setFormData({ ...formData, content: e.target.value })
+            }
             className="new-blog-content"
           />
         </Form.Group>
