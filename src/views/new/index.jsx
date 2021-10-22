@@ -1,24 +1,67 @@
 import React, { Component } from "react";
 import "react-quill/dist/quill.snow.css";
-import ReactQuill from "react-quill";
+
 import { Container, Form, Button } from "react-bootstrap";
 
 import { useState, useEffect } from "react";
 import "./styles.css";
 const NewBlogPost = () => {
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    _id: "",
+    title: "",
+    category: "",
+    content: "",
+    cover: "",
+    author: {},
+    comment: [],
+  });
+
+  const [imgUrl, setImgUrl] = useState(null);
+
+  const fetchData = async () => {
+    try {
+      let response = await fetch("http://localhost:3001/blogs/uploadSingle", {
+        method: "POST",
+        body: JSON.stringify(formData),
+        headers: { "Content-type": "application/json" },
+      });
+
+      if (response.ok) {
+        let data = await response.json();
+
+        console.log(data);
+        setFormData({
+          _id: "",
+          title: "",
+          category: "",
+          content: "",
+          cover: "",
+          author: {},
+          comment: [],
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  /*   useEffect(() => {
+    fetchData();
+  }, []); */
 
   return (
     <Container className="new-blog-container">
       <Form className="mt-5">
-        <Form.Group
-          controlId="blog-form"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          className="mt-3"
-        >
+        <Form.Group controlId="blog-form" className="mt-3">
           <Form.Label>Title</Form.Label>
-          <Form.Control size="lg" placeholder="Title" />
+          <Form.Control
+            size="lg"
+            placeholder="Title"
+            value={formData.title}
+            onChange={(e) =>
+              setFormData({ ...formData, title: e.target.value })
+            }
+          />
         </Form.Group>
         <Form.Group controlId="blog-category" className="mt-3">
           <Form.Label>Category</Form.Label>
@@ -43,11 +86,18 @@ const NewBlogPost = () => {
           />
         </Form.Group>
         <Form.Group className="d-flex mt-3 justify-content-end">
+          <Form.Control
+            type="file"
+            onChange={(e) => {
+              setImgUrl({ imgUrl: e.target.files[0] });
+            }}
+          />
+
           <Button type="reset" size="lg" variant="outline-dark">
             Reset
           </Button>
           <Button
-            type="submit"
+            onClick={() => fetchData()}
             size="lg"
             variant="dark"
             style={{ marginLeft: "1em" }}
