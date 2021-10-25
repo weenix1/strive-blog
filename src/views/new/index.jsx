@@ -16,7 +16,7 @@ const NewBlogPost = () => {
     comment: [],
   });
 
-  const [imgUrl, setImgUrl] = useState(null);
+  const [picture, setPicture] = useState(null);
 
   const fetchData = async () => {
     try {
@@ -89,7 +89,7 @@ const NewBlogPost = () => {
           <Form.Control
             type="file"
             onChange={(e) => {
-              setImgUrl({ imgUrl: e.target.files[0] });
+              setPicture({ picture: e.target.files[0] });
             }}
           />
 
