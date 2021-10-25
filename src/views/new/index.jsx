@@ -6,7 +6,7 @@ import { Container, Form, Button } from "react-bootstrap";
 import { useState, useEffect } from "react";
 import "./styles.css";
 const NewBlogPost = () => {
-  const [formData, setFormData] = useState({
+  const [blogPostData, setFormData] = useState({
     _id: "",
     title: "",
     category: "",
@@ -20,10 +20,15 @@ const NewBlogPost = () => {
 
   const fetchData = async () => {
     try {
+      const formData = new FormData();
+      console.log(picture);
+      formData.append("picture", picture);
+      formData.append("title", blogPostData.title);
+      formData.append("category", blogPostData.category);
       let response = await fetch("http://localhost:3001/blogs/uploadSingle", {
         method: "POST",
-        body: JSON.stringify(formData),
-        headers: { "Content-type": "application/json" },
+        body: formData,
+        //headers: { "Content-Type": "multipart/form-data" },
       });
 
       if (response.ok) {
@@ -57,9 +62,9 @@ const NewBlogPost = () => {
           <Form.Control
             size="lg"
             placeholder="Title"
-            value={formData.title}
+            value={blogPostData.title}
             onChange={(e) =>
-              setFormData({ ...formData, title: e.target.value })
+              setFormData({ ...blogPostData, title: e.target.value })
             }
           />
         </Form.Group>
@@ -78,9 +83,9 @@ const NewBlogPost = () => {
           <Form.Control
             as="textarea"
             row={20}
-            value={formData.content}
+            value={blogPostData.content}
             onChange={(e) =>
-              setFormData({ ...formData, content: e.target.value })
+              setFormData({ ...blogPostData, content: e.target.value })
             }
             className="new-blog-content"
           />
@@ -89,7 +94,8 @@ const NewBlogPost = () => {
           <Form.Control
             type="file"
             onChange={(e) => {
-              setPicture({ picture: e.target.files[0] });
+              console.log(e.target.files);
+              setPicture(e.target.files[0]);
             }}
           />
 
