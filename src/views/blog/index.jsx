@@ -38,7 +38,7 @@ const Blog = ({ match }) => {
       if (response.ok) {
         let data = await response.json();
         console.log("HERE IS MY DATA", data);
-        setComments(data.comments);
+        setComments(data.comments.reverse());
         console.log("HERE IS COMMENTS", data.comments);
       }
     } catch (error) {
