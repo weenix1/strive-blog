@@ -26,6 +26,7 @@ const NewBlogPost = () => {
       formData.append("picture", picture);
       formData.append("title", blogPostData.title);
       formData.append("category", blogPostData.category);
+      formData.append("content", blogPostData.content);
       let response = await fetch(apiUrl + "/uploadSingle", {
         method: "POST",
         body: formData,
