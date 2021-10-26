@@ -35,9 +35,9 @@ const MyComment = ({ match }) => {
   }, []);
  */
   return (
-    <Container className="new-blog-container">
-      <Form className="mt-5">
-        <Form.Group controlId="blog-content" className="mt-1">
+    <Container>
+      <Form className="mt-1">
+        <Form.Group controlId="blog-content" className="mt-3">
           <Form.Label>Comment</Form.Label>
           <Form.Control
             as="textarea"
