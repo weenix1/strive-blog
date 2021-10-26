@@ -6,10 +6,13 @@ import BlogLike from "../../components/likes/BlogLike";
 import posts from "../../data/posts.json";
 import "./styles.css";
 import { useState, useEffect } from "react";
+import MyComment from "../new/MyComment";
 
 const Blog = ({ match }) => {
   const [blog, setBlog] = useState(null);
+  /* const [comment, setComment] = useState(null); */
   const [loading, setLoading] = useState(true);
+  const [comments, setComments] = useState([]);
   let id = match.params._id;
 
   const fetchBlogs = async (id) => {
@@ -27,8 +30,27 @@ const Blog = ({ match }) => {
     }
   };
 
+  const getComments = async () => {
+    const apiUrl = process.env.REACT_APP_BE_URL;
+    console.log(id);
+    try {
+      let response = await fetch(apiUrl + `/${id}`, {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+      if (response.ok) {
+        let data = await response.json();
+        console.log("HERE IS MY DATA", data);
+        setComments(data.comments);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     fetchBlogs(id);
+    getComments();
   }, []);
 
   /*   const { loading, blog } = this.state; */
@@ -54,7 +76,12 @@ const Blog = ({ match }) => {
                 </div>
               </div>
             </div>
-
+            <MyComment id={id} />
+            <div>
+              {comments.map((comment) => (
+                <h5>{comment.text}</h5>
+              ))}
+            </div>
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
           </Container>
         }
