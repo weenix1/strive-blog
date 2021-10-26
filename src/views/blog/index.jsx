@@ -13,8 +13,9 @@ const Blog = ({ match }) => {
   let id = match.params._id;
 
   const fetchBlogs = async (id) => {
+    const apiUrl = process.env.REACT_APP_BE_URL;
     try {
-      let response = await fetch("http://localhost:3001/blogs/" + id);
+      let response = await fetch(apiUrl + `/${id}`);
       if (response.ok) {
         let data = await response.json();
         console.log("HERE IS MY DATA", data);

@@ -19,13 +19,14 @@ const NewBlogPost = () => {
   const [picture, setPicture] = useState(null);
 
   const fetchData = async () => {
+    const apiUrl = process.env.REACT_APP_BE_URL;
     try {
       const formData = new FormData();
       console.log(picture);
       formData.append("picture", picture);
       formData.append("title", blogPostData.title);
       formData.append("category", blogPostData.category);
-      let response = await fetch("http://localhost:3001/blogs/uploadSingle", {
+      let response = await fetch(apiUrl + "/uploadSingle", {
         method: "POST",
         body: formData,
         //headers: { "Content-Type": "multipart/form-data" },
