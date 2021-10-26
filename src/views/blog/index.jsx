@@ -34,14 +34,12 @@ const Blog = ({ match }) => {
     const apiUrl = process.env.REACT_APP_BE_URL;
     console.log(id);
     try {
-      let response = await fetch(apiUrl + `/${id}`, {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
+      let response = await fetch(apiUrl + `/${id}`);
       if (response.ok) {
         let data = await response.json();
         console.log("HERE IS MY DATA", data);
         setComments(data.comments);
+        console.log("HERE IS COMMENTS", data.comments);
       }
     } catch (error) {
       console.log(error);

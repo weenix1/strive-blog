@@ -16,6 +16,7 @@ const MyComment = ({ match }) => {
     try {
       let response = await fetch(apiUrl + `/${id}` + `/comments`, {
         method: "POST",
+        body: JSON.stringify(comment),
         headers: { "Content-Type": "application/json" },
       });
       if (response.ok) {
