@@ -77,7 +77,9 @@ const Blog = ({ match }) => {
             <MyComment id={id} />
             <div>
               {comments.map((comment) => (
-                <h5>{comment.text}</h5>
+                <div className="row">
+                  <h5>{comment.text}</h5>
+                </div>
               ))}
             </div>
             <div dangerouslySetInnerHTML={{ __html: blog.content }}></div>
